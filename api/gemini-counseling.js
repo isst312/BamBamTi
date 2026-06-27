@@ -12,9 +12,8 @@ export default async function handler(req, res) {
   }
 
   // API 키 하드코딩 (Vercel 설정이 어려우신 분을 위한 임시 조치)
-  const GEMINI_API_KEY = "AIzaSyAKXoh34rhPeNW6AbZHpljaw7R8Gq5vXMw";
-
-  if (!GEMINI_API_KEY) {
+  // API 키 확인
+  if (!process.env.GEMINI_API_KEY) {
     return res.status(500).json({ success: false, error: 'GEMINI_API_KEY 환경 변수가 설정되지 않았습니다.' });
   }
 
@@ -43,7 +42,7 @@ ${teacherConcern}
   `;
 
   try {
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=${GEMINI_API_KEY}`, {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent?key=${process.env.GEMINI_API_KEY}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
